@@ -1,0 +1,7 @@
+PyTorch
+YOLOv3
+FastAPI
+torchvision
+numpy
+scikit-learn
+Pillow
