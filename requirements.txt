@@ -1,7 +1,12 @@
-PyTorch
-YOLOv3
-FastAPI
-torchvision
-numpy
-scikit-learn
-Pillow
+# ── MVP pipeline (HOG + LBP + SVM) ───────────────────────────────────────────
+opencv-python>=4.8
+scikit-image>=0.21
+scikit-learn>=1.3
+numpy>=1.24
+joblib>=1.3
+pytest>=7.4
+
+# ── Legacy CNN path (optional, not required for the MVP) ─────────────────────
+# torch>=2.0
+# torchvision>=0.15
+# Pillow>=10.0

@@ -6,7 +6,7 @@
 ## Folder Structure
 
 ```
-cattle_id/
+cattle-biometric-id/
 ├── data/
 │   ├── raw/                    # Training images  (cattle_001/, cattle_002/, …)
 │   └── test/                   # Evaluation images (same sub-folder layout)
@@ -25,6 +25,12 @@ cattle_id/
 │   ├── train_pipeline.py       # Train the model on data/raw/
 │   ├── predict.py              # Identify a single cattle image
 │   └── evaluate.py             # Evaluate model on data/test/
+├── tests/
+│   └── test_pipeline.py        # pytest unit + integration + smoke tests
+├── legacy/
+│   ├── embedding_model.py      # CNN (ResNet-50 + ArcFace/Triplet) experiment
+│   ├── test_features.py        # GradCAM visualisation for CNN model
+│   └── config.py               # CUDA/model config for CNN approach
 ├── pipeline.py                 # Orchestrates Steps 1-5 for one image
 └── requirements.txt
 ```
@@ -161,3 +167,24 @@ The rest of the pipeline is cascade-agnostic.
 | `svm_C` | `classifier.py` | Grid search 0.1, 1, 10, 100 |
 | `n_components` | `classifier.py` | 50–200 depending on dataset size |
 | `use_watershed` | `pipeline.py` | Enable when lighting is consistent |
+
+---
+
+## Running the Tests
+
+```bash
+python -m pytest tests/ -v
+```
+
+The test suite covers every pipeline stage individually, the full preprocessing
+chain, the classifier train/predict cycle, and an end-to-end smoke test
+(synthetic data → train → predict).
+
+---
+
+## Legacy: CNN Embedding Approach
+
+A CNN-based experiment (ResNet-50 backbone, ArcFace / Triplet loss,
+128-dim L2-normalised embeddings) is preserved in the `legacy/` directory.
+It does **not** form part of the MVP pipeline and requires PyTorch +
+torchvision.  See `legacy/README.md` for details.
